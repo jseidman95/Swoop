@@ -1,5 +1,5 @@
 //
-//  iterable.swift
+//  Iterable.swift
 //  
 //
 //  Created by Jesse Seidman on 8/2/22.
