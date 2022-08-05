@@ -16,7 +16,6 @@ public class And: Scalar {
   }
 
   public func value() throws -> Bool {
-
     return try Reduced(iterable: origin) { partial, element in
       return partial && element
     }.value()

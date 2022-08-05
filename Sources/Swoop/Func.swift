@@ -13,3 +13,16 @@ public protocol Func<X, Y> {
 
   func apply(input: X) throws -> Y
 }
+
+public class FuncSmart<X, Y>: Func {
+
+  private let f: (X) throws -> Y
+
+  public init(f: @escaping (X) throws -> Y) {
+    self.f = f
+  }
+
+  public func apply(input: X) throws -> Y {
+    return try f(input)
+  }
+}
