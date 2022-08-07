@@ -21,9 +21,9 @@ public class IteratorOf<T>: IteratorProtocol {
     position < list.count
   }
 
-  public func next() throws -> T {
+  public func next() -> T {
     if !hasNext() {
-      throw StandardException("Iterator is empty!")
+      fatalError("Iterator is empty!")
     }
 
     let pos = position

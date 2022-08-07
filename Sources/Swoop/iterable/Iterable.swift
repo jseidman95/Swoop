@@ -11,13 +11,45 @@ public protocol IteratorProtocol<Element> {
   associatedtype Element
 
   func hasNext() -> Bool
-  func next() throws -> Element
+  func next() -> Element
 }
 
 public protocol Iterable<Element> {
   associatedtype Element
 
   func iterator() -> any IteratorProtocol<Element>
+}
+
+public class IterableSmart<X>: Iterable {
+  
+  private let iteratorClosure: () -> any IteratorProtocol<X>
+  
+  init(iteratorClosure: @escaping () -> any IteratorProtocol<X>) {
+    self.iteratorClosure = iteratorClosure
+  }
+  
+  public func iterator() -> any IteratorProtocol<X> {
+    return iteratorClosure()
+  }
+}
+
+public class IteratorProtocolSmart<X>: IteratorProtocol {
+  
+  private let hasNextClosure: () -> Bool
+  private let nextClosure: () -> X
+  
+  public init(hasNextClosure: @escaping () -> Bool, nextClosure: @escaping () -> X) {
+    self.hasNextClosure = hasNextClosure
+    self.nextClosure = nextClosure
+  }
+  
+  public func hasNext() -> Bool {
+    return hasNextClosure()
+  }
+  
+  public func next() -> X {
+    return nextClosure()
+  }
 }
 
 extension Array: Iterable {
@@ -43,11 +75,11 @@ extension Array: Iterable {
       return (currentIndex + 1) < arr.count
     }
 
-    func next() throws -> Element {
+    func next() -> Element {
       currentIndex += 1
 
       if currentIndex >= arr.count {
-        throw StandardException("Array Index out of bounds")
+        fatalError("Array Index out of bounds")
       }
 
       return arr[currentIndex]
