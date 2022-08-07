@@ -50,6 +50,12 @@ public class Joined<X>: Iterable {
     )
   }
   
+  public convenience init(item: X, items: any Iterable<X>) {
+    self.init(
+      IterableOf(IterableOf(item), items)
+    )
+  }
+  
   public func iterator() -> any IteratorProtocol<X> {
     return itr.iterator()
   }

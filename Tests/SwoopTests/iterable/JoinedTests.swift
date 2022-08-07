@@ -23,4 +23,16 @@ class JoinedTests: XCTestCase {
       8
     )
   }
+  
+  func testJoinSingleItem() throws {
+    XCTAssertEqual(
+      try LengthOf(
+        Joined(
+          item: 7,
+          items: IterableOf(7,8)
+        )
+      ).value(),
+      3
+    )
+  }
 }
