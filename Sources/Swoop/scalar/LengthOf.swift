@@ -15,6 +15,13 @@ public class LengthOf: Scalar {
     self.length = length
   }
 
+  public func value() throws -> Int {
+    return try length.value()
+  }
+}
+
+extension LengthOf {
+  
   public convenience init<T>(_ iterable: any Iterable<T>) throws {
 
     self.init(
@@ -22,15 +29,11 @@ public class LengthOf: Scalar {
         let iterator = iterable.iterator()
         var size = 0
         while iterator.hasNext() {
-          _ = try iterator.next()
+          _ = iterator.next()
           size += 1
         }
         return size
       }
     )
-  }
-
-  public func value() throws -> Int {
-    return try length.value()
   }
 }

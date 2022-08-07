@@ -15,6 +15,13 @@ public class ScalarOf<T>: Scalar {
     self.scalar = scalar
   }
 
+  public func value() throws -> T {
+    return try scalar.value()
+  }
+}
+
+extension ScalarOf {
+  
   public convenience init<X>(
     fnc: any Func<X, T>,
     input: X
@@ -24,9 +31,5 @@ public class ScalarOf<T>: Scalar {
         return try fnc.apply(input: input)
       }
     )
-  }
-
-  public func value() throws -> T {
-    return try scalar.value()
   }
 }

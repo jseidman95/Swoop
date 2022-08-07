@@ -15,6 +15,13 @@ public class IterableOf<X>: Iterable {
     self.itr = itr
   }
 
+  public func iterator() -> any IteratorProtocol<X> {
+    return Unchecked(itr).value()
+  }
+}
+
+extension IterableOf {
+
   public convenience init(iterator: any IteratorProtocol<X>) {
     self.init(
       itr: ScalarSmart {
@@ -25,9 +32,5 @@ public class IterableOf<X>: Iterable {
 
   public convenience init(_ items: X...) {
     self.init(iterator: IteratorOf(items))
-  }
-
-  public func iterator() -> any IteratorProtocol<X> {
-    return Unchecked(itr).value()
   }
 }

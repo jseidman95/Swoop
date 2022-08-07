@@ -17,6 +17,25 @@ public class Reduced<T: Equatable>: Scalar {
     self.function = function
   }
 
+  public func value() throws -> T {
+    let i = iterable.iterator()
+
+    if !i.hasNext() {
+      throw StandardException("Can't find first element in empty iterable")
+    }
+
+    var item = try i.next().value()
+    while i.hasNext() {
+      let next = try i.next().value()
+      item = try self.function.apply(first: item, second: next)
+    }
+
+    return item
+  }
+}
+
+extension Reduced {
+  
   public convenience init(
     iterable: any Iterable<any Scalar<T>>,
     _ closure: @escaping (T, T) throws -> T
@@ -36,21 +55,4 @@ public class Reduced<T: Equatable>: Scalar {
       function: BiFuncSmart(closure: closure)
     )
   }
-
-  public func value() throws -> T {
-    let i = iterable.iterator()
-
-    if !i.hasNext() {
-      throw StandardException("Can't find first element in empty iterable")
-    }
-
-    var item = try i.next().value()
-    while i.hasNext() {
-      let next = try i.next().value()
-      item = try self.function.apply(first: item, second: next)
-    }
-
-    return item
-  }
 }
-

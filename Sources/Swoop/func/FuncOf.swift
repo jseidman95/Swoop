@@ -15,15 +15,18 @@ public class FuncOf<X, Y>: Func {
     self.f = f
   }
 
+  public func apply(input: X) throws -> Y {
+    return try f.apply(input: input)
+  }
+}
+
+extension FuncOf {
+  
   public convenience init(scalar: any Scalar<Y>) {
     self.init(
       f: FuncSmart { _ in
         return try scalar.value()
       }
     )
-  }
-
-  public func apply(input: X) throws -> Y {
-    return try f.apply(input: input)
   }
 }

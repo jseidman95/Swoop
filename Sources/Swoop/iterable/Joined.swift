@@ -15,40 +15,12 @@ public class Joined<X>: Iterable {
     self.itr = itr
   }
   
-  public convenience init(_ itr: any Iterable<any Iterable<X>>) {
-    self.init(
-      itr: IterableSmart {
-        var i: any IteratorProtocol<X>
-        let outer = itr.iterator()
-        if !outer.hasNext() {
-          i = IteratorProtocolSmart(
-            hasNextClosure: { return false },
-            nextClosure: { fatalError("Array index out of bounds") }
-          )
-        } else {
-          var inner = outer.next().iterator()
-          i = IteratorProtocolSmart(
-            hasNextClosure: {
-              return inner.hasNext() || outer.hasNext()
-            },
-            nextClosure: {
-              while !inner.hasNext() {
-                if outer.hasNext() {
-                  inner = outer.next().iterator()
-                } else {
-                  fatalError("Array index out of bounds")
-                }
-              }
-
-              return inner.next()
-            }
-          )
-        }
-        
-        return i
-      }
-    )
+  public func iterator() -> any IteratorProtocol<X> {
+    return itr.iterator()
   }
+}
+
+extension Joined {
   
   public convenience init(item: X, items: any Iterable<X>) {
     self.init(
@@ -56,7 +28,53 @@ public class Joined<X>: Iterable {
     )
   }
   
-  public func iterator() -> any IteratorProtocol<X> {
-    return itr.iterator()
+  public convenience init(_ itr: any Iterable<any Iterable<X>>) {
+    self.init(
+      itr: IterableSmart {
+        let outer = itr.iterator()
+        
+        // Empty array
+        if !outer.hasNext() {
+          return IteratorProtocolSmart(
+            hasNextClosure: { return false },
+            nextClosure: { fatalError("Array index out of bounds - Need at least one item in the iterable") }
+          )
+        } else {
+          var inner = outer.next().iterator()
+
+          while !inner.hasNext() {
+            if outer.hasNext() {
+              // item is empty but there is a next item
+              inner = outer.next().iterator()
+            } else {
+              // item is empty and there is no next item
+              return IteratorProtocolSmart(
+                hasNextClosure: { return false },
+                nextClosure: { fatalError("Array index out of bounds") }
+              )
+            }
+          }
+          
+          return IteratorProtocolSmart(
+            hasNextClosure: {
+              return inner.hasNext()
+            },
+            nextClosure: {
+              let next = inner.next()
+
+              while !inner.hasNext() {
+                if outer.hasNext() {
+                  inner = outer.next().iterator()
+                } else {
+                  break
+                }
+              }
+
+              return next
+            }
+          )
+        }
+      }
+    )
   }
 }

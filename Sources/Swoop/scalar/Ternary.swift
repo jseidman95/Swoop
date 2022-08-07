@@ -15,6 +15,15 @@ public class Ternary<T>: Scalar {
     self.val = val
   }
 
+  public func value() throws -> T {
+    return try val.value()
+  }
+}
+
+extension Ternary {
+  
+  private class Object {}
+  
   public convenience init<U>(
     input: any Scalar<U>,
     condition: any Func<U, Bool>,
@@ -94,13 +103,4 @@ public class Ternary<T>: Scalar {
       alternative: Constant(alternative)
     )
   }
-
-  public func value() throws -> T {
-    return try val.value()
-  }
-}
-
-private extension Ternary {
-
-  class Object {}
 }
