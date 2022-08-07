@@ -27,7 +27,6 @@ public class IterableOf<X>: Iterable {
     self.init(iterator: IteratorOf(items))
   }
 
-  // Why is this unchecked?
   public func iterator() -> any IteratorProtocol<X> {
     return Unchecked(itr).value()
   }
