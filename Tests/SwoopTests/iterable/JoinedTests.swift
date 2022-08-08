@@ -10,17 +10,19 @@ import XCTest
 
 class JoinedTests: XCTestCase {
 
-  func testJoinLists() throws {
+  func testJoinMultipleLists() throws {
     XCTAssertEqual(
       try LengthOf(
         Joined(
-          IterableOf(
-            IterableOf(1,2,3,4,5,6),
-            IterableOf(7,8)
-          )
+          [1,2,3,4],
+          ListOf([1,2,3,4]),
+          ListOf([1,2,3,4]),
+          ListOf([1,2,3,4]),
+          ListOf([1,2,3,4]),
+          ListOf([1,2,3,4])
         )
       ).value(),
-      8
+      6
     )
   }
   
@@ -29,7 +31,7 @@ class JoinedTests: XCTestCase {
       try LengthOf(
         Joined(
           item: 7,
-          items: IterableOf(5,6)
+          items: [5,6]
         )
       ).value(),
       3
@@ -40,13 +42,13 @@ class JoinedTests: XCTestCase {
     XCTAssertEqual(
       try LengthOf(
         Joined(
-          IterableOf(
-            IterableOf(),
-            IterableOf(1)
-          )
+          1,
+          2,
+          4,
+          [4,5,6]
         )
       ).value(),
-      1
+      3
     )
   }
   
@@ -54,7 +56,7 @@ class JoinedTests: XCTestCase {
     XCTAssertEqual(
       try LengthOf(
         Joined(
-          IterableOf(
+          ListOf(
             IterableOf(1),
             IterableOf()
           )
@@ -68,8 +70,8 @@ class JoinedTests: XCTestCase {
     XCTAssertEqual(
       try LengthOf(
         Joined<Any>(
-          IterableOf(
-            IterableOf()
+          ListOf(
+            IterableOf<Any>()
           )
         )
       ).value(),
@@ -81,11 +83,11 @@ class JoinedTests: XCTestCase {
     XCTAssertEqual(
       try LengthOf(
         Joined<Any>(
-          IterableOf(
-            IterableOf(),
-            IterableOf(),
-            IterableOf(),
-            IterableOf()
+          ListOf(
+            IterableOf<Any>(),
+            IterableOf<Any>(),
+            IterableOf<Any>(),
+            IterableOf<Any>()
           )
         )
       ).value(),
@@ -97,11 +99,11 @@ class JoinedTests: XCTestCase {
     XCTAssertEqual(
       try LengthOf(
         Joined<Any>(
-          IterableOf(
+          ListOf(
             IterableOf(1,2,3,4,5),
-            IterableOf(),
+            IterableOf<Int>(),
             IterableOf(6,7,8,9,10),
-            IterableOf()
+            IterableOf<Int>()
           )
         )
       ).value(),
@@ -113,10 +115,10 @@ class JoinedTests: XCTestCase {
     XCTAssertEqual(
       try LengthOf(
         Joined<Any>(
-          IterableOf(
+          ListOf(
             IterableOf(1,2,3,4,5),
-            IterableOf(),
-            IterableOf()
+            IterableOf<Int>(),
+            IterableOf<Int>()
           )
         )
       ).value(),
@@ -128,9 +130,9 @@ class JoinedTests: XCTestCase {
     XCTAssertEqual(
       try LengthOf(
         Joined<Any>(
-          IterableOf(
-            IterableOf(),
-            IterableOf(),
+          ListOf(
+            IterableOf<Int>(),
+            IterableOf<Int>(),
             IterableOf(1,2,3,4,5),
             IterableOf(6,7,8,9,10),
             IterableOf(11,12,13,14,15)

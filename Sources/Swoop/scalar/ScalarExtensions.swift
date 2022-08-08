@@ -1,5 +1,5 @@
 //
-//  Extensions.swift
+//  ScalarExtensions.swift
 //  
 //
 //  Created by Jesse Seidman on 8/2/22.

@@ -29,8 +29,14 @@ extension IterableOf {
       }
     )
   }
+  
+  public convenience init(list: any List<X>) {
+    self.init(
+      iterator: IteratorOf(list: list)
+    )
+  }
 
   public convenience init(_ items: X...) {
-    self.init(iterator: IteratorOf(items))
+    self.init(list: items)
   }
 }

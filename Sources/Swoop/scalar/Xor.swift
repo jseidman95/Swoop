@@ -24,7 +24,7 @@ extension Xor {
   
   public convenience init(iterable: any Iterable<any Scalar<Bool>>) {
     self.init(
-      Reduced(Joined(item: False(), items: iterable)) { lhs, rhs in
+      Reduced(Joined(item: False(), items: ListOf(itr: iterable))) { lhs, rhs in
         return (lhs && !rhs) || (!lhs && rhs)
       }
     )
@@ -34,7 +34,7 @@ extension Xor {
     self.init(
       iterable: IterableOf(
         itr: ScalarSmart {
-          IteratorOf(scalars)
+          IteratorOf(arr: scalars)
         }
       )
     )
