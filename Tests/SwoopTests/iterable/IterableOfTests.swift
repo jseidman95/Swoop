@@ -19,9 +19,12 @@ class IterableOfTests: XCTestCase {
     )
   }
 
-//  func testConvertIntsToIterable() {
-//    XCTAssertTrue(
-//      IterableOf(1,2,5,9)
-//    )
-//  }
+  func testConvertObjectsToIterable() {
+    XCTAssertEqual(
+      try LengthOf(
+        IterableOf(TextOf("a"), TextOf("b"), TextOf("c"))
+      ).value(),
+      3
+    )
+  }
 }
