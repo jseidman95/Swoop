@@ -12,7 +12,7 @@ class ReducedTests: XCTestCase {
 
   func testThrowsErrorForEmptyIterable() throws {
     XCTAssertThrowsError(
-      try Reduced(iterable: []) { x,y in
+      try Reduced([]) { x,y in
         return x
       }.value() as String
     )

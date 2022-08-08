@@ -16,7 +16,7 @@ public class Or: Scalar {
   }
 
   public func value() throws -> Bool {
-    return try Reduced(iterable: origin) { partialResult, bool in
+    return try Reduced(origin) { partialResult, bool in
       return partialResult || bool
     }.value()
   }

@@ -12,7 +12,7 @@ public class Reduced<T: Equatable>: Scalar {
   private let iterable: any Iterable<any Scalar<T>>
   private let function: any BiFunc<T,T,T>
 
-  public init(iterable: any Iterable<any Scalar<T>>, function: any BiFunc<T, T, T>) {
+  public init(_ iterable: any Iterable<any Scalar<T>>, function: any BiFunc<T, T, T>) {
     self.iterable = iterable
     self.function = function
   }
@@ -37,11 +37,11 @@ public class Reduced<T: Equatable>: Scalar {
 extension Reduced {
   
   public convenience init(
-    iterable: any Iterable<any Scalar<T>>,
-    _ closure: @escaping (T, T) throws -> T
+    _ iterable: any Iterable<any Scalar<T>>,
+    closure: @escaping (T, T) throws -> T
   ) {
     self.init(
-      iterable: iterable,
+      iterable,
       function: BiFuncSmart(closure: closure)
     )
   }
@@ -51,7 +51,7 @@ extension Reduced {
     closure: @escaping (T, T) throws -> T
   ) {
     self.init(
-      iterable: items,
+      items,
       function: BiFuncSmart(closure: closure)
     )
   }
