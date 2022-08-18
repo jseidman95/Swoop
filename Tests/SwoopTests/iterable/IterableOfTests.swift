@@ -34,24 +34,9 @@ class IterableOfTests: XCTestCase {
   func testConvertObjectsToIterable() {
     XCTAssertEqual(
       try LengthOf(
-        IterableOf(
-          TextOf
-        )
+        IterableOf(TextOf("a"), TextOf("b"), TextOf("c"))
       ).value(),
       3
     )
   }
-
-//  @Test
-//      void convertsObjectsToIterable() throws Exception {
-//          new Assertion<>(
-//              "Must convert objects to iterable",
-//              new LengthOf(
-//                  new IterableOf<>(
-//                      new TextOf("a"), new TextOf("b"), new TextOf("c")
-//                  )
-//              ),
-//              new HasValue<>(3L)
-//          ).affirm();
-//      }
 }
