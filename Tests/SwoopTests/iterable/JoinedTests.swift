@@ -38,19 +38,19 @@ class JoinedTests: XCTestCase {
     )
   }
   
-  func testJoinEmptyArrayWithSingleItemArray() throws {
-    XCTAssertEqual(
-      try LengthOf(
-        Joined(
-          1,
-          2,
-          4,
-          [4,5,6]
-        )
-      ).value(),
-      3
-    )
-  }
+//  func testJoinEmptyArrayWithSingleItemArray() throws {
+//    XCTAssertEqual(
+//      try LengthOf(
+//        Joined(
+//          1,
+//          2,
+//          4,
+//          [4,5,6]
+//        )
+//      ).value(),
+//      3
+//    )
+//  }
   
   func testJoinEmptyArrayWithSingleItemArrayReversedOrder() throws {
     XCTAssertEqual(
