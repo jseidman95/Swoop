@@ -8,12 +8,14 @@
 import Foundation
 
 public protocol List<Element>: Iterable {
-  associatedtype Element
-  
   mutating func add(element: Element)
   mutating func add(collection: any List<Element>)
   mutating func set(element: Element, atIndex index: Int)
+
   func element(atIndex index: Int) -> Element
   func isEmpty() -> Bool
   func count() -> Int
+
+  func contains(where predicate: (Element) throws -> Bool) rethrows -> Bool
+  func contains(allIn l: any List<Element>, where predicate: (Element) throws -> Bool) rethrows -> Bool
 }

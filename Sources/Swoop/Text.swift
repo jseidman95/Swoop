@@ -15,7 +15,7 @@ public class TextSmart: Text {
   
   private let asStringClosure: () throws -> String
   
-  init(asStringClosure: @escaping () -> String) {
+  public init(asStringClosure: @escaping () throws -> String) {
     self.asStringClosure = asStringClosure
   }
   

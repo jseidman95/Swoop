@@ -42,6 +42,14 @@ public class Joined<X>: List {
   public func count() -> Int {
     return list.count()
   }
+
+  public func contains(where predicate: (X) throws -> Bool) rethrows -> Bool {
+    return try list.contains(where: predicate)
+  }
+
+  public func contains(allIn l: any List<Element>, where predicate: (Element) throws -> Bool) rethrows -> Bool {
+    return try list.contains(allIn: l, where: predicate)
+  }
 }
 
 extension Joined {

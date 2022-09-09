@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class Reduced<T: Equatable>: Scalar {
+public class Reduced<T>: Scalar {
 
   private let iterable: any Iterable<any Scalar<T>>
   private let function: any BiFunc<T,T,T>

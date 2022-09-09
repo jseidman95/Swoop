@@ -37,4 +37,8 @@ extension IteratorOf {
   public convenience init(arr: [T]) {
     self.init(list: arr)
   }
+
+  public convenience init(_ items: T...) {
+    self.init(arr: items)
+  }
 }

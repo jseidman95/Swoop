@@ -21,7 +21,7 @@ extension List {
 }
 
 extension Array: List {
-  
+
   public mutating func set(element: Element, atIndex index: Int) {
     self[index] = element
   }
@@ -47,5 +47,17 @@ extension Array: List {
   
   public func count() -> Int {
     return self.count
+  }
+
+  public func contains(allIn l: any List<Element>, where predicate: (Element) throws -> Bool) rethrows -> Bool {
+    let i = l.iterator()
+    var contains = false
+    while i.hasNext() {
+      let n = i.next()
+      let c = try predicate(n)
+      contains = contains || c
+    }
+
+    return contains
   }
 }

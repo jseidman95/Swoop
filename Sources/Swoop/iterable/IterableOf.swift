@@ -39,4 +39,8 @@ extension IterableOf {
   public convenience init(_ items: X...) {
     self.init(list: items)
   }
+
+  public convenience init(arr: [X]) {
+    self.init(list: arr)
+  }
 }
