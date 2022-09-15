@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import Matchers
 @testable import Swoop
 
 class FuncOfTests: XCTestCase {
@@ -14,9 +15,10 @@ class FuncOfTests: XCTestCase {
     let obj = NSObject()
     let funcOf = FuncOf<String, NSObject>(scalar: Constant(obj))
 
-    XCTAssertEqual(
-      try funcOf.apply(input: "nothing"),
-      obj
-    )
+    Assertion(
+      message: "confirm that scalar is converted to Func",
+      test: IsEqual(value: obj),
+      matcher: Matches(try! funcOf.apply(input: "nothing"))
+    ).affirm()
   }
 }

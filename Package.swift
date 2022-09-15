@@ -10,7 +10,12 @@ let package = Package(
       // Products define the executables and libraries a package produces, and make them visible to other packages.
       .library(
         name: "Swoop",
-        targets: ["Swoop"]),
+        targets: ["Swoop"]
+      ),
+      .library(
+        name: "Matchers",
+        targets: ["Matchers"]
+      )
     ],
     dependencies: [
       // Dependencies declare other packages that this package depends on.
@@ -21,9 +26,27 @@ let package = Package(
       // Targets can depend on other targets in this package, and on products in packages this package depends on.
       .target(
         name: "Swoop",
-        dependencies: []),
+        dependencies: [],
+        path: "Sources/Swoop"
+      ),
+      .target(
+        name: "Matchers",
+        dependencies: ["Swoop"],
+        path: "Sources/Matchers"
+      ),
+      .testTarget(
+        name: "MatcherTests",
+        dependencies: [
+          "Swoop", "Matchers"
+        ],
+        path: "Tests/MatcherTests"
+      ),
       .testTarget(
         name: "SwoopTests",
-        dependencies: ["Swoop"]),
+        dependencies: [
+          "Swoop", "Matchers"
+        ],
+        path: "Tests/SwoopTests"
+      )
     ]
 )

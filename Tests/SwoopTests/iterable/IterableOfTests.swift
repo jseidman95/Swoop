@@ -6,37 +6,38 @@
 //
 
 import XCTest
+import Matchers
 @testable import Swoop
 
 class IterableOfTests: XCTestCase {
 
   func testConvertsScalarsToIterable() {
-    XCTAssertEqual(
-      try LengthOf(
+    Assertion(
+      message: "Converts scalars to iterable",
+      test: try! LengthOf(
         IterableOf("a", "b", "c")
-      ).value(),
-      3
-    )
+      ),
+      matcher: HasValue(3)
+    ).affirm()
   }
 
   func testConvertArrayOfIntsToIterable() {
-    let i = IterableOf(1,2,0,2).iterator()
-    var hasInt = false
-    while i.hasNext() {
-      if i.next() == 0 {
-        hasInt = true
-      }
-    }
-
-    XCTAssertTrue(hasInt)
+    Assertion(
+      message: "Converts ints to iterable",
+      test: IterableOf(
+        1,2,0,2
+      ),
+      matcher: HasValues(0)
+    ).affirm()
   }
 
   func testConvertObjectsToIterable() {
-    XCTAssertEqual(
-      try LengthOf(
+    Assertion(
+      message: "Converts ints to iterable",
+      test: try! LengthOf(
         IterableOf(TextOf("a"), TextOf("b"), TextOf("c"))
-      ).value(),
-      3
-    )
+      ),
+      matcher: HasValue(3)
+    ).affirm()
   }
 }

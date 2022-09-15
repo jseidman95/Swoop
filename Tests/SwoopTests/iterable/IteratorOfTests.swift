@@ -6,14 +6,17 @@
 //
 
 import XCTest
+import Matchers
 @testable import Swoop
 
 class IteratorOfTests: XCTestCase {
 
   func testEmptyIteratorDoesNotHaveNext() {
-    XCTAssertTrue(
-      IteratorOf<Any>().hasNext() != true
-    )
+    Assertion(
+      message: "Must create empty iterator",
+      test: IteratorOf<Any>().hasNext(),
+      matcher: IsNot(IsTrue())
+    ).affirm()
   }
 
   func testNonEmptyIteratorDoesNotHaveNext() {
@@ -23,14 +26,21 @@ class IteratorOfTests: XCTestCase {
       _ = i.next()
     }
 
-    XCTAssertTrue(
-      i.hasNext() != true
-    )
+    Assertion(
+      message: "Must create non empty iterator",
+      test: i.hasNext(),
+      matcher: IsNot(IsTrue())
+    ).affirm()
   }
 
   func testConvertStringsToIterator() {
-    IterableOf(
-      iterator: IteratorOf("a", "b", "c")
-    )
+    Assertion(
+      message: "Must create an iterator of strings",
+      test: IterableOf(
+        iterator: IteratorOf("a", "b", "c")
+      ),
+      matcher: HasValues("a", "b", "c")
+    ).affirm()
+
   }
 }
