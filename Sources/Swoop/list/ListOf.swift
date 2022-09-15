@@ -50,6 +50,10 @@ public class ListOf<X>: List {
   public func contains(allIn l: any List<Element>, where predicate: (Element) throws -> Bool) rethrows -> Bool {
     return try list.contains(allIn: l, where: predicate)
   }
+
+  public func remove(atIndex index: Int) {
+    list.remove(atIndex: index)
+  }
 }
 
 extension ListOf {

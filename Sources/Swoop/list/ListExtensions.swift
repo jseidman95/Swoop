@@ -60,4 +60,8 @@ extension Array: List {
 
     return contains
   }
+
+  public mutating func remove(atIndex index: Int) {
+    remove(at: index)
+  }
 }
