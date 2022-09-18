@@ -22,7 +22,7 @@ public class LengthOf: Scalar {
 
 extension LengthOf {
   
-  public convenience init<T>(_ iterable: any Iterable<T>) throws {
+  public convenience init<T>(_ iterable: any Iterable<T>) {
 
     self.init(
       length: ScalarSmart {
