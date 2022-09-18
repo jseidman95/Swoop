@@ -6,52 +6,56 @@
 //
 
 import XCTest
+import Matchers
 @testable import Swoop
 
 class ReducedTests: XCTestCase {
 
   func testThrowsErrorForEmptyIterable() throws {
-    XCTAssertThrowsError(
-      try Reduced([]) { x,y in
+    Assertion(
+      message: "should throw standard exception because no element exists",
+      test: Reduced<Any>([]) { x,y in
         return x
-      }.value() as String
-    )
+      },
+      matcher: ThrowsScalarException()
+    ).affirm()
   }
-
-  func testReducesToTheSingleItem() throws {
-    XCTAssert(
-      try Reduced(
-        1,
-        closure: { first, second in
-          return first
-        }
-      ).value() == 1
-    )
+  
+  func testFindSingleItemIterable() {
+    let single = 10
+    Assertion(
+      message: "Find the single yo",
+      test: Reduced(
+        ScalarSmart { return single },
+        closure: { first, last in return first }
+      ),
+      matcher: HasValue(single)
+    ).affirm()
   }
-
-  func testReducesToFirstInTheList() throws {
-    XCTAssert(
-      try Reduced(
-        "Apple",
-        "Banana",
-        "Orange",
-        closure: { first, second in
-          return first
-        }
-      ).value() == "Apple"
-    )
+  
+  func testFirstAtIterable() {
+    Assertion(
+      message: "Find the first yo",
+      test: Reduced(
+        ScalarSmart { return "Apple" },
+        ScalarSmart { return "Banana" },
+        ScalarSmart { return "Orange" },
+        closure: { first, second in return first}
+      ),
+      matcher: HasValue("Apple")
+    ).affirm()
   }
-
-  func testReducesToLastInTheList() throws {
-    XCTAssert(
-      try Reduced(
-        "A",
-        "B",
-        "O",
-        closure: { first, second in
-          return second
-        }
-      ).value() == "O"
-    )
+  
+  func testLastAtIterable() {
+    Assertion(
+      message: "Find the last yo",
+      test: Reduced(
+        ScalarSmart { return "Apple" },
+        ScalarSmart { return "Banana" },
+        ScalarSmart { return "Orange" },
+        closure: { first, second in return second }
+      ),
+      matcher: HasValue("Orange")
+    ).affirm()
   }
 }
