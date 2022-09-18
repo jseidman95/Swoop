@@ -12,11 +12,11 @@ public class HasValue<T: Equatable>: MatcherEnvelope<any Scalar<T>> {
 
   public convenience init(_ value: T) {
     self.init(
-      m: IsEqual(value: value)
+      IsEqual(value: value)
     )
   }
 
-  public convenience init(m: any Matcher<T>) {
+  public convenience init(_ m: any Matcher<T>) {
     self.init(
       matcher: MatcherOf(
         match: FuncSmart { input in
