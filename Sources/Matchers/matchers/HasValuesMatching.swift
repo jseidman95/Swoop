@@ -14,7 +14,7 @@ public class HasValuesMatching<X>: MatcherEnvelope<any Iterable<X>> {
     self.init(
       matcher: MatcherOf(
         match: FuncSmart { input in
-          return try Or(fnc: fnc, src: input).value()
+          return try Or(fnc, input).value()
         },
         description: TextSmart {
           return "matches at least 1 element"

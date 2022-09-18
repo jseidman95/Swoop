@@ -10,10 +10,10 @@ import Foundation
 public protocol List<Element>: Iterable {
   mutating func add(element: Element)
   mutating func add(collection: any List<Element>)
-  mutating func remove(atIndex index: Int)
-  mutating func set(element: Element, atIndex index: Int)
+  mutating func remove(atIndex index: Int) throws
+  mutating func set(element: Element, atIndex index: Int) throws
 
-  func element(atIndex index: Int) -> Element
+  func element(atIndex index: Int) throws -> Element
   func isEmpty() -> Bool
   func count() -> Int
 

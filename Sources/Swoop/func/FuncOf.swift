@@ -29,4 +29,13 @@ extension FuncOf {
       }
     )
   }
+
+  public convenience init(_ proc: any Procedure<X>, _ result: Y) {
+    self.init(
+      f: FuncSmart { input in
+        try proc.apply(input: input)
+        return result
+      }
+    )
+  }
 }

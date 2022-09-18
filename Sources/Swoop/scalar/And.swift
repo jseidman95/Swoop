@@ -11,13 +11,66 @@ public class And: Scalar {
 
   private let origin: any Iterable<any Scalar<Bool>>
 
-  public init(_ origin: any Scalar<Bool>...) {
+  public init(origin: any Iterable<any Scalar<Bool>>) {
     self.origin = origin
   }
 
   public func value() throws -> Bool {
-    return try Reduced(origin) { partial, element in
-      return partial && element
-    }.value()
+    var result = true
+    let i = origin.iterator()
+
+    while i.hasNext() {
+      if try i.next().value() != true {
+        result = false
+        break
+      }
+    }
+
+    return result
+  }
+}
+
+public extension And {
+
+  convenience init(_ origin: any Scalar<Bool>...) {
+    self.init(origin: origin)
+  }
+
+  convenience init<X>(_ subject: X, _ conditions: any Func<X, Bool>...) {
+    self.init(subject, IterableOf(arr: conditions));
+  }
+
+  convenience init<X>(_ fnc: any Func<X, Bool>, _ src: X...) {
+    self.init(fnc, IterableOf(arr: src) as any Iterable<X>)
+  }
+
+  convenience init<X>(_ fnc: any Func<X, Bool>, _ src: any Iterable<X>) {
+    self.init(
+      origin: MappedIterable(
+        fnc: FuncSmart { item in
+          ScalarSmart {
+            return try fnc.apply(input: item)
+          }
+        },
+        src: src
+      )
+    )
+  }
+
+  convenience init<X>(_ subject: X, _ conditions: any Func<X, Bool>) {
+    self.init(subject, IterableOf(conditions))
+  }
+
+  convenience init<X>(_ subject: X, _ conditions: any Iterable<any Func<X, Bool>>) {
+    self.init(
+      origin: MappedIterable(
+        fnc: FuncSmart { input in
+          ScalarSmart {
+            return try input.apply(input: subject)
+          }
+        },
+        src: conditions
+      )
+    )
   }
 }

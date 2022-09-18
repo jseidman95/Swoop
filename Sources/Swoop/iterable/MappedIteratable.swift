@@ -1,5 +1,5 @@
 //
-//  MappedIteratable.swift
+//  MappedIterable.swift
 //  
 //
 //  Created by Jesse Seidman on 9/8/22.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class MappedIteratable<Y>: Iterable {
+public class MappedIterable<Y>: Iterable {
 
   private let iterable: any Iterable<Y>
 
@@ -20,7 +20,7 @@ public class MappedIteratable<Y>: Iterable {
   }
 }
 
-public extension MappedIteratable {
+public extension MappedIterable {
 
   convenience init<X>(fnc: any Func<X, Y>, src: any Iterable<X>) {
     self.init(
@@ -30,3 +30,13 @@ public extension MappedIteratable {
     )
   }
 }
+
+//public <X> Mapped(
+//        final Func<? super X, ? extends Y> fnc, final Iterable<? extends X> src
+//    ) {
+//        super(
+//            new IterableOf<>(
+//                () -> new org.cactoos.iterator.Mapped<>(fnc, src.iterator())
+//            )
+//        );
+//    }

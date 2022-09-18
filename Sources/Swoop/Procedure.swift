@@ -12,3 +12,16 @@ public protocol Procedure<X> {
 
   func apply(input: X) throws
 }
+
+public class ProcedureSmart<X>: Procedure {
+
+  private let closure: (X) throws -> Void
+
+  public init(closure: (X) throws -> Void) {
+    self.closure = closure
+  }
+
+  public func apply(input: X) throws {
+    closure(input)
+  }
+}
