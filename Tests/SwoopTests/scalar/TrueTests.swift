@@ -6,11 +6,16 @@
 //
 
 import XCTest
+import Matchers
 @testable import Swoop
 
 class TrueTests: XCTestCase {
 
   func testValue() throws {
-    XCTAssertEqual(True().value(), true)
+    Assertion(
+      message: "Should give the value true",
+      test: True().value(),
+      matcher: IsEqual(value: true)
+    ).affirm()
   }
 }
