@@ -7,19 +7,6 @@
 
 import Foundation
 
-extension List {
-  
-  subscript(index: Int) -> Element {
-    get {
-      return element(atIndex: index)
-    }
-    
-    set {
-      set(element: newValue, atIndex: index)
-    }
-  }
-}
-
 extension Array: List {
 
   public mutating func set(element: Element, atIndex index: Int) {

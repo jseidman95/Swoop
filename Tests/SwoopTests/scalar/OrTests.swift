@@ -61,111 +61,94 @@ class OrTests: XCTestCase {
   }
 
   func testProcedureIterable() throws {
+    let list = ListOf<Int>()
     Assertion(
       message: "confirm proc iterable",
-      test: Or(
-        ProcedureSmart { inp in inp.add},
-        <#T##any Iterable<X>#>
+      test: try Or(
+        ProcedureSmart<Int> { inp in list.add(element: inp) },
+        IterableOf(1,2,3,4)
       ).value(),
+      matcher: MatcherOf(
+        match: FuncSmart { _ in
+          list.contains(
+            allIn: ListOf(1,2,3,4),
+            where: { elem in
+              list.contains(where: { $0 == elem })
+            }
+          )
+        },
+        description: TextSmart { "Should contain elements in list" },
+        mismatch: FuncSmart { _ in
+          return "does not contains some elements in list \(list)"
+        }
+      )
+    ).affirm()
+  }
+  
+  func testProcVarArgs() throws {
+    let list = ListOf<Int>()
+    _ = try Or(
+      ProcedureSmart { elem in
+        list.add(element: elem)
+      },
+      2,3,4
+    ).value()
+    
+    Assertion(
+      message: "Should have added values to list",
+      test: list,
+      matcher: HasValues(2,3,4)
+    ).affirm()
+  }
+  
+  func testFuncIterable() {
+    Assertion(
+      message: "Should use the func iterable init correctly",
+      test: Or(
+        FuncSmart { input in
+          input > 0
+        },
+        IterableOf(-1,1,0)
+      ),
+      matcher: HasValue(true)
+    ).affirm()
+  }
+  
+  func testFuncVarargs() {
+    Assertion(
+      message: "Should use the func vararg init correctly",
+      test: Or(
+        FuncSmart { input in
+          input > 0
+        },
+        -1,1,0
+      ),
+      matcher: HasValue(true)
+    ).affirm()
+  }
+  
+  func testMultipleFuncConditionTrue() {
+    Assertion(
+      message: "Can't compare subject with true conditions",
+      test: Or(
+        3,
+        FuncSmart { input in input > 0 },
+        FuncSmart { input in input > 5 },
+        FuncSmart { input in input > 4 }
+      ),
+      matcher: HasValue(true)
+    ).affirm()
+  }
+  
+  func testMultipleFuncConditionFalse() {
+    Assertion(
+      message: "Can't compare subject with true conditions",
+      test: Or(
+        "swoop",
+        FuncSmart { input in input.contains("singleton") },
+        FuncSmart { input in input.contains("static") }
+      ),
       matcher: HasValue(false)
     ).affirm()
   }
 }
-//    @Test
-//    void testProcIterable() throws Exception {
-//        final List<Integer> list = new LinkedList<>();
-//        new Or(
-//            (Proc<Integer>) list::add,
-//            new IterableOf<>(1, 2, 3, 4)
-//        ).value();
-//        MatcherAssert.assertThat(
-//            list,
-//            Matchers.contains(1, 2, 3, 4)
-//        );
-//    }
-//
-//    @Test
-//    void testProcIterator() throws Exception {
-//        final List<Integer> list = new LinkedList<>();
-//        new Or(
-//            (Proc<Integer>) list::add,
-//            new IterableOf<>(1, 2, 3, 4)
-//        ).value();
-//        MatcherAssert.assertThat(
-//            list,
-//            Matchers.contains(1, 2, 3, 4)
-//        );
-//    }
-//
-//    @Test
-//    void testProcVarargs() throws Exception {
-//        final List<Integer> list = new LinkedList<>();
-//        new Or(
-//            (Proc<Integer>) list::add,
-//            2, 3, 4
-//        ).value();
-//        MatcherAssert.assertThat(
-//            list,
-//            Matchers.contains(2, 3, 4)
-//        );
-//    }
-//
-//    @Test
-//    void testFuncIterable() throws Exception {
-//        MatcherAssert.assertThat(
-//            new Or(
-//                input -> input > 0,
-//                new IterableOf<>(-1, 1, 0)
-//            ),
-//            new HasValue<>(true)
-//        );
-//    }
-//
-//    @Test
-//    void testFuncIterator() throws Exception {
-//        MatcherAssert.assertThat(
-//            new Or(
-//                input -> input > 0,
-//                new IterableOf<>(-1, 1, 0)
-//            ),
-//            new HasValue<>(true)
-//        );
-//    }
-//
-//    @Test
-//    void testFuncVarargs() throws Exception {
-//        MatcherAssert.assertThat(
-//            new Or(
-//                input -> input > 0,
-//                -1, -2, 0
-//            ),
-//            new HasValue<>(false)
-//        );
-//    }
-//
-//    @Test
-//    void testMultipleFuncConditionTrue() throws Exception {
-//        MatcherAssert.assertThat(
-//            "Can't compare subject with true conditions",
-//            new Or(
-//                3,
-//                input -> input > 0,
-//                input -> input > 5,
-//                input -> input > 4
-//            ),
-//            new HasValue<>(true)
-//        );
-//    }
-//
-//    @Test
-//    void testMultipleFuncConditionFalse() throws Exception {
-//        MatcherAssert.assertThat(
-//            "Can't compare subject with false conditions",
-//            new Or(
-//                "cactoos",
-//                input -> input.contains("singleton"),
-//                input -> input.contains("static")
-//            ),
-//            new HasValue<>(false)
-//        );
-//    }

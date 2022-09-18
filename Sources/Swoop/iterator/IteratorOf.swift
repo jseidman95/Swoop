@@ -28,7 +28,7 @@ public class IteratorOf<T>: IteratorProtocol {
 
     let pos = position
     position += 1
-    return list[pos]
+    return try! list.element(atIndex: pos)
   }
 }
 

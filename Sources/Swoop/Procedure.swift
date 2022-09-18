@@ -17,11 +17,11 @@ public class ProcedureSmart<X>: Procedure {
 
   private let closure: (X) throws -> Void
 
-  public init(closure: (X) throws -> Void) {
+  public init(closure: @escaping (X) throws -> Void) {
     self.closure = closure
   }
 
   public func apply(input: X) throws {
-    closure(input)
+    try closure(input)
   }
 }

@@ -23,12 +23,12 @@ open class ListEnvelope<E>: List {
     list.add(collection: collection)
   }
 
-  open func set(element: E, atIndex index: Int) {
-    list.set(element: element, atIndex: index)
+  open func set(element: E, atIndex index: Int) throws {
+    try list.set(element: element, atIndex: index)
   }
 
-  open func element(atIndex index: Int) -> E {
-    return list.element(atIndex: index)
+  open func element(atIndex index: Int) throws -> E {
+    return try list.element(atIndex: index)
   }
 
   open func isEmpty() -> Bool {
@@ -51,7 +51,7 @@ open class ListEnvelope<E>: List {
     return list.iterator()
   }
 
-  open func remove(atIndex index: Int) {
-    list.remove(atIndex: index)
+  open func remove(atIndex index: Int) throws {
+    try list.remove(atIndex: index)
   }
 }

@@ -75,12 +75,12 @@ class JoinedTests: XCTestCase {
     ).affirm()
   }
 
-  func testRemove() {
+  func testRemove() throws {
     let joined = Joined(
       ListOf("one"),
       ListOf("two")
     )
-    joined.remove(atIndex: 1)
+    try joined.remove(atIndex: 1)
 
     Assertion<any Iterable<String>>(
       message: "Must be able to add element specified",

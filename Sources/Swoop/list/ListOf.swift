@@ -31,12 +31,12 @@ public class ListOf<X>: List {
     return list.count()
   }
   
-  public func set(element: X, atIndex index: Int) {
-    list.set(element: element, atIndex: index)
+  public func set(element: X, atIndex index: Int) throws {
+    try list.set(element: element, atIndex: index)
   }
   
-  public func element(atIndex index: Int) -> X {
-    return list.element(atIndex: index)
+  public func element(atIndex index: Int) throws -> X {
+    return try list.element(atIndex: index)
   }
   
   public func iterator() -> any IteratorProtocol<X> {
@@ -51,8 +51,8 @@ public class ListOf<X>: List {
     return try list.contains(allIn: l, where: predicate)
   }
 
-  public func remove(atIndex index: Int) {
-    list.remove(atIndex: index)
+  public func remove(atIndex index: Int) throws {
+    try list.remove(atIndex: index)
   }
 }
 
