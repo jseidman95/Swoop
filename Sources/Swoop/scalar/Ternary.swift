@@ -25,10 +25,10 @@ extension Ternary {
   private class Object {}
   
   public convenience init<U>(
-    input: any Scalar<U>,
-    condition: any Func<U, Bool>,
-    consequent: any Func<U, T>,
-    alternative: any Func<U, T>
+    _ input: any Scalar<U>,
+    _ condition: any Func<U, Bool>,
+    _ consequent: any Func<U, T>,
+    _ alternative: any Func<U, T>
   ) {
     self.init(
       val: ScalarSmart {
@@ -42,65 +42,65 @@ extension Ternary {
   }
 
   public convenience init<U>(
-    input: U,
-    condition: any Func<U, Bool>,
-    consequent: any Func<U, T>,
-    alternative: any Func<U, T>
+    _ input: U,
+    _ condition: any Func<U, Bool>,
+    _ consequent: any Func<U, T>,
+    _ alternative: any Func<U, T>
   ) {
     self.init(
-      input: Constant(input),
-      condition: condition,
-      consequent: consequent,
-      alternative: alternative
+      Constant(input),
+      condition,
+      consequent,
+      alternative
     )
   }
 
   public convenience init(
-    condition: any Scalar<Bool>,
-    consequent: any Scalar<T>,
-    alternative: any Scalar<T>
+    _ condition: any Scalar<Bool>,
+    _ consequent: any Scalar<T>,
+    _ alternative: any Scalar<T>
   ) {
     self.init(
-      input: Object(),
-      condition: FuncOf(scalar: condition),
-      consequent: FuncOf(scalar: consequent),
-      alternative: FuncOf(scalar: alternative)
+      Object(),
+      FuncOf(scalar: condition),
+      FuncOf(scalar: consequent),
+      FuncOf(scalar: alternative)
     )
   }
 
   public convenience init(
-    condition: Bool,
-    consequent: any Scalar<T>,
-    alternative: any Scalar<T>
+    _ condition: Bool,
+    _ consequent: any Scalar<T>,
+    _ alternative: any Scalar<T>
   ) {
     self.init(
-      condition: Constant(condition),
-      consequent: consequent,
-      alternative: alternative
+      Constant(condition),
+      consequent,
+      alternative
     )
   }
 
   public convenience init(
-    condition: any Scalar<Bool>,
-    consequent: T,
-    alternative: T
+    _ condition: any Scalar<Bool>,
+    _ consequent: T,
+    _ alternative: T
   ) {
     self.init(
-      condition: condition,
-      consequent: Constant(consequent),
-      alternative: Constant(alternative)
+      condition,
+      Constant(consequent),
+      Constant(alternative)
     )
   }
 
   public convenience init(
-    condition: Bool,
-    consequent: T,
-    alternative: T
+    _ condition: Bool,
+    _ consequent: T,
+    _ alternative: T
   ) {
     self.init(
-      condition: condition,
-      consequent: Constant(consequent),
-      alternative: Constant(alternative)
+      condition,
+      Constant(consequent),
+      Constant(alternative)
     )
   }
 }

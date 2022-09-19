@@ -21,13 +21,13 @@ public class HasEntry<K: Hashable, V: Equatable>: MatcherEnvelope<Dictionary<K, 
         },
         mismatch: FuncSmart { input in
           try Ternary(
-            condition: ScalarSmart {
+            ScalarSmart {
               return input[key] != nil
             },
-            consequent: ScalarSmart {
+            ScalarSmart {
               return "has entry \(key) with value \(input[key])"
             },
-            alternative: ScalarSmart{
+            ScalarSmart{
               return "has no entry for \(key)"
             }
           ).value()
