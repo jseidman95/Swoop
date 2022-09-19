@@ -14,7 +14,7 @@ final class MatchesTest: XCTestCase {
   func testMatches() {
     Assertion(
       message: "Matcher IsText(abc) gives positive result for Text(abc)",
-      test: IsText("abc"),
+      test: IsText(string: "abc"),
       matcher: Matches(TextOf("abc"))
     ).affirm()
   }
@@ -23,7 +23,7 @@ final class MatchesTest: XCTestCase {
     Assertion(
       message: "Matcher TextIs(abc) gives positive result for Text(abc)",
       test: Matches(TextOf("abc")),
-      matcher: Matches(IsText("abc"))
+      matcher: Matches(IsText(string: "abc"))
     ).affirm()
   }
 
@@ -31,7 +31,7 @@ final class MatchesTest: XCTestCase {
     Assertion(
       message: "Matcher IsText(abc) gives negative result for Text(def)",
       test: Matches(TextOf("def")),
-      matcher: Mismatches(IsText("abc"))
+      matcher: Mismatches(IsText(string: "abc"))
     ).affirm()
   }
 }

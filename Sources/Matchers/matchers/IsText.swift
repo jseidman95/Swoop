@@ -22,7 +22,7 @@ public class IsText<T: Text>: MatcherEnvelope<T> {
     )
   }
 
-  public convenience init(_ string: String) {
+  public convenience init(string: String) {
     self.init(TextOf(string))
   }
 }

@@ -15,7 +15,7 @@ final class IsTextTests: XCTestCase {
     let string = "ahab"
     Assertion(
       message: "must match text",
-      test: IsText(string),
+      test: IsText(string: string),
       matcher: Matches(TextOf(string))
     ).affirm()
   }
@@ -23,7 +23,7 @@ final class IsTextTests: XCTestCase {
   func testMismatchText() {
     Assertion(
       message: "doesn't match text that isn't the same",
-      test: IsText("xy"),
+      test: IsText(string: "xy"),
       matcher: Mismatches(TextOf("kdfjl"))
     ).affirm()
   }

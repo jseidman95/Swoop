@@ -47,12 +47,12 @@ public extension And {
   convenience init<X>(_ fnc: any Func<X, Bool>, _ src: any Iterable<X>) {
     self.init(
       origin: MappedIterable(
-        fnc: FuncSmart { item in
+        FuncSmart { item in
           ScalarSmart {
             return try fnc.apply(input: item)
           }
         },
-        src: src
+        src
       )
     )
   }
@@ -64,12 +64,12 @@ public extension And {
   convenience init<X>(_ subject: X, _ conditions: any Iterable<any Func<X, Bool>>) {
     self.init(
       origin: MappedIterable(
-        fnc: FuncSmart { input in
+        FuncSmart { input in
           ScalarSmart {
             return try input.apply(input: subject)
           }
         },
-        src: conditions
+        conditions
       )
     )
   }

@@ -37,13 +37,13 @@ public extension Or {
   convenience init<X>(_ fnc: any Func<X, Bool>, _ src: any Iterable<X>) {
     self.init(
       itr: MappedIterable(
-        fnc: FuncSmart { input in
+        FuncSmart { input in
           return ScalarOf(
             fnc: fnc,
             input: input
           )
         },
-        src: src
+        src
       )
     )
   }
@@ -51,12 +51,12 @@ public extension Or {
   convenience init<X>(_ subject: X, _ conditions: any Func<X, Bool>...) {
     self.init(
       itr: MappedIterable(
-        fnc: FuncSmart { item in
+        FuncSmart { item in
           ScalarSmart {
             return try item.apply(input: subject)
           }
         },
-        src: IterableOf(arr: conditions)
+        IterableOf(arr: conditions)
       )
     )
   }

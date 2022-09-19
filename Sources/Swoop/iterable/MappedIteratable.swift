@@ -21,22 +21,22 @@ public class MappedIterable<Y>: Iterable {
 }
 
 public extension MappedIterable {
-
-  convenience init<X>(fnc: any Func<X, Y>, src: any Iterable<X>) {
+  
+  convenience init<X>(_ fnc: any Func<X, Y>, _ src: any Iterable<X>) {
     self.init(
       iterable: IterableOf(
-        iterator: MappedIterator(fnc: fnc, itr: src.iterator())
+        iterator: MappedIterator(
+          fnc: fnc,
+          itr: src.iterator()
+        )
       )
     )
   }
-}
 
-//public <X> Mapped(
-//        final Func<? super X, ? extends Y> fnc, final Iterable<? extends X> src
-//    ) {
-//        super(
-//            new IterableOf<>(
-//                () -> new org.cactoos.iterator.Mapped<>(fnc, src.iterator())
-//            )
-//        );
-//    }
+  convenience init<X>(_ fnc: any Func<X, Y>, _ src: X...) {
+    self.init(
+      fnc,
+      IterableOf(arr: src)
+    )
+  }
+}

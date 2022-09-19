@@ -9,7 +9,7 @@ final class AssertionTests: XCTestCase {
     Assertion(
       message: "must affirm the assertion if the test's result is as expected",
       test: TextOf(expect),
-      matcher: IsText(expect)
+      matcher: IsText(string: expect)
     ).affirm()
   }
 }
