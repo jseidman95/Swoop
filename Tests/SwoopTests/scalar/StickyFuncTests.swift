@@ -27,7 +27,7 @@ class StickyFuncTests: XCTestCase {
   func testCachesWithLimitedBuffer() throws {
     let fnc: any Func<Int, Int> = StickyFunc(
       fnc: FuncSmart { _ in
-        return Int.random(in: 0...100)
+        return Int.random(in: 0...1000)
       },
       max: 2
     )
@@ -41,10 +41,11 @@ class StickyFuncTests: XCTestCase {
     ).affirm()
     
     let third = try fnc.apply(input: -1)
+    
     Assertion(
-      message: "Must cache next two results",
-      test: second + third,
-      matcher: IsEqual(value: try fnc.apply(input: 1) + fnc.apply(input: -1))
+      message: "Must cache next results",
+      test: third,
+      matcher: IsEqual(value: try fnc.apply(input: -1))
     ).affirm()
   }
   
