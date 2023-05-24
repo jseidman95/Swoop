@@ -1,5 +1,5 @@
 //
-//  Folded.swift
+//  HighestOf.swift
 //
 //
 //  Created by Jesse Seidman on 5/24/23.

@@ -8,9 +8,9 @@
 import Foundation
 import Swoop
 
-public class IsNot: MatcherEnvelope<Bool> {
+public class IsNot<T: Equatable>: MatcherEnvelope<T> {
 
-  public convenience init(_ boolMatcher: any Matcher<Bool>) {
+  public convenience init(_ boolMatcher: any Matcher<T>) {
     self.init(
       matcher: MatcherOf(
         match: FuncSmart { input in
