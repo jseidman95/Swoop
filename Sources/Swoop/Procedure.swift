@@ -10,7 +10,7 @@ import Foundation
 public protocol Procedure<X> {
   associatedtype X
 
-  func apply(input: X) throws
+  func execute(input: X) throws
 }
 
 public class ProcedureSmart<X>: Procedure {
@@ -21,7 +21,7 @@ public class ProcedureSmart<X>: Procedure {
     self.closure = closure
   }
 
-  public func apply(input: X) throws {
+  public func execute(input: X) throws {
     try closure(input)
   }
 }

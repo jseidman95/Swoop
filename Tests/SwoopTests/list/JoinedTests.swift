@@ -24,7 +24,7 @@ class JoinedTests: XCTestCase {
 
   func testEmpty() {
     Assertion(
-      message: "Must be evaluated as a noon empty list",
+      message: "Must be evaluated as a non empty list",
       test: Joined(
         ListOf("one", "two"),
         ListOf("three", "four")
