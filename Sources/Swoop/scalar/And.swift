@@ -17,10 +17,9 @@ public class And: Scalar {
 
   public func value() throws -> Bool {
     var result = true
-    let i = origin.iterator()
 
-    while i.hasNext() {
-      if try i.next().value() != true {
+    for item in origin.sequence() {
+      if try item.value() != true {
         result = false
         break
       }

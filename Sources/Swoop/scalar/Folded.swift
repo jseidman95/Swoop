@@ -23,10 +23,9 @@ public class Folded<X,T>: Scalar {
   
   public func value() throws -> X {
     var memo = input
-    let iterator = iterable.iterator()
     
-    while iterator.hasNext() {
-      memo = try fnc.apply(first: memo, second: iterator.next())
+    for item in iterable.sequence() {
+      memo = try fnc.apply(first: memo, second: item)
     }
     
     return memo

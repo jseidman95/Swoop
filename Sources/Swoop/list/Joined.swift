@@ -21,14 +21,12 @@ public class Joined<X>: ListEnvelope<X> {
     self.init(
       list: ListOf(
         itr: IterableSmart {
-          let outer = src.iterator()
           var arr = [X]()
-
-          while outer.hasNext() {
-            let inner = outer.next().iterator()
-            while inner.hasNext() {
-              arr.append(inner.next())
-            }
+            
+          src.forEach { outer in
+              outer.forEach { inner in
+                  arr.append(inner)
+              }
           }
 
           return IteratorOf(arr: arr)

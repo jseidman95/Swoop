@@ -19,3 +19,27 @@ public protocol Iterable<Element> {
 
   func iterator() -> any IteratorProtocol<Element>
 }
+
+extension Iterable {
+    
+    func forEach(_ closure: (Element) throws -> Void) rethrows {
+        let i = iterator()
+        while i.hasNext() {
+            let next = i.next()
+            try closure(next)
+        }
+    }
+    
+    func sequence() -> AnySequence<Element> {
+        return AnySequence {
+            let i = iterator()
+            return AnyIterator {
+                if i.hasNext() {
+                    return i.next()
+                } else {
+                    return nil
+                }
+            }
+        }
+    }
+}

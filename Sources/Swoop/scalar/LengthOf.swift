@@ -26,10 +26,8 @@ extension LengthOf {
 
     self.init(
       length: ScalarSmart {
-        let iterator = iterable.iterator()
         var size = 0
-        while iterator.hasNext() {
-          _ = iterator.next()
+        for item in iterable.sequence() {
           size += 1
         }
         return size

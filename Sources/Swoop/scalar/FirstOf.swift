@@ -24,11 +24,9 @@ public class FirstOf<T>: Scalar {
   }
 
   public func value() throws -> T {
-    let iterator = source.iterator()
-    while iterator.hasNext() {
-      let next = iterator.next()
-      if try condition.apply(input: next) {
-        return next
+    for item in source.sequence() {
+      if try condition.apply(input: item) {
+        return item
       }
     }
     

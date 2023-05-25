@@ -17,10 +17,10 @@ public class Or: Scalar {
 
   public func value() throws -> Bool {
     var result = false
-    let i = origin.iterator()
-    while i.hasNext() {
-      if try i.next().value() == true {
+    for item in origin.sequence() {
+      if try item.value() == true {
         result = true
+        break
       }
     }
     return result
