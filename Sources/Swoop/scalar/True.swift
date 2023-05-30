@@ -8,6 +8,8 @@
 import Foundation
 
 public class True: Scalar {
+  
+  public init() {}
 
   public func value() -> Bool {
     return true

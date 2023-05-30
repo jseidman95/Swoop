@@ -11,7 +11,7 @@ public class ScalarOf<T>: Scalar {
 
   private let scalar: any Scalar<T>
 
-  private init(scalar: any Scalar<T>) {
+  public init(_ scalar: any Scalar<T>) {
     self.scalar = scalar
   }
 
@@ -27,7 +27,7 @@ extension ScalarOf {
     input: X
   ) {
     self.init(
-      scalar: ScalarSmart {
+      ScalarSmart {
         return try fnc.apply(input: input)
       }
     )

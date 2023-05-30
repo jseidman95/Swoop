@@ -22,6 +22,8 @@ public class IterableOf<X>: Iterable {
 
 extension IterableOf {
 
+  // only use this init if you're okay with an iterator being stored instead of
+  // created each time the iterable is used. Side effects can happen in this case
   public convenience init(iterator: any IteratorProtocol<X>) {
     self.init(
       itr: ScalarSmart {
@@ -32,7 +34,9 @@ extension IterableOf {
   
   public convenience init(list: any List<X>) {
     self.init(
-      iterator: IteratorOf(list: list)
+      itr: ScalarSmart {
+        IteratorOf(list: list)
+      }
     )
   }
 

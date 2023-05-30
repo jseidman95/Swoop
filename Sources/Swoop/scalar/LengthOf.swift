@@ -27,10 +27,18 @@ extension LengthOf {
     self.init(
       length: ScalarSmart {
         var size = 0
-        for item in iterable.sequence() {
+        for _ in iterable.sequence() {
           size += 1
         }
         return size
+      }
+    )
+  }
+  
+  public convenience init(_ text: Text) {
+    self.init(
+      length: ScalarSmart {
+        return try text.asString().count
       }
     )
   }

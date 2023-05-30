@@ -40,7 +40,7 @@ class MappedIterableTests: XCTestCase {
     Assertion(
       message: "transforms empty iterable",
       test: MappedIterable(
-        FuncSmart { Upper(TextOf($0)) }
+        FuncSmart { Upper(TextOf(text: $0)) }
       ),
       matcher: IsEmptyIterable()
     ).affirm()

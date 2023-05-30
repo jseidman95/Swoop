@@ -11,7 +11,7 @@ public class TextEnvelope: Text {
   
   private let text: Text
   
-  init(text: Text) {
+  internal init(text: Text) {
     self.text = text
   }
   

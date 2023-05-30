@@ -11,7 +11,7 @@ public class TextOf: Text {
   
   private let text: Text
   
-  private init(text: Text) {
+  public init(text: Text) {
     self.text = text
   }
   

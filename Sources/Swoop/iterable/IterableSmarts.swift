@@ -11,7 +11,7 @@ public class IterableSmart<X>: Iterable {
   
   private let iteratorClosure: () -> any IteratorProtocol<X>
   
-  init(iteratorClosure: @escaping () -> any IteratorProtocol<X>) {
+  public init(iteratorClosure: @escaping () -> any IteratorProtocol<X>) {
     self.iteratorClosure = iteratorClosure
   }
   
