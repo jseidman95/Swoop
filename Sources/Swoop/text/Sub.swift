@@ -17,17 +17,20 @@ public class Sub: TextEnvelope {
     self.init(
       text: MappedText(
         fnc: FuncSmart { origin in
-          var begin = try start.apply(input: origin)
+          let begin = try start.apply(input: origin)
           if begin < 0 {
-            begin = 0
+            throw StandardException("begin must be greater than zero")
           }
           
-          var finish = try end.apply(input: origin)
-          if origin.count < finish {
-            finish = origin.count - 1
+          let finish = try end.apply(input: origin)
+          
+          if begin > finish {
+            throw StandardException("begin: \(begin) must be less than finish: \(finish)")
           }
           
-          
+          if finish >= origin.count {
+            throw StandardException("finish: \(finish) must be less than count: \(origin.count)")
+          }
 
           return String(
             origin[origin.index(origin.startIndex, offsetBy: begin)...origin.index(origin.startIndex, offsetBy: finish)]

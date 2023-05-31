@@ -35,29 +35,56 @@ class SubTests: XCTestCase {
     ).affirm()
   }
   
-  func testCutTextAdjustsEnd() {
+  func testCutTextInvalidEnd() throws {
     
     Assertion(
-      message: "Cut a text for end",
-      test: Sub(
-        text: TextOf("hello world"),
-        start: 2,
-        final: 50
-      ),
-      matcher: HasString(TextOf("llo world"))
+      message: "Throws for invalid end",
+      test: ScalarSmart {
+        try Sub(
+          text: TextOf("hello world"),
+          start: 2,
+          final: 50
+        ).asString()
+      },
+      matcher: Throws(
+        msg: "finish: 50 must be less than count: 11",
+        type: StandardException.Type.self
+      )
     ).affirm()
   }
   
-  func testCutTextAdjustsStart() {
-    
+  func testCutTextThrowsForInvalidStart() {
+
     Assertion(
-      message: "Cut a text for start",
-      test: Sub(
-        text: TextOf("hello world"),
-        start: -1,
-        final: 50
-      ),
-      matcher: HasString(TextOf("llo world"))
+      message: "Throw for invalid start",
+      test: ScalarSmart {
+        try Sub(
+          text: TextOf("hello world"),
+          start: -1,
+          final: 50
+        ).asString()
+      },
+      matcher: Throws(
+        msg: "begin must be greater than zero",
+        type: StandardException.Type.self
+      )
+    ).affirm()
+  }
+  
+  func testBeginCantBeGreaterThanEnd() {
+    Assertion(
+      message: "Throw for invalid beginning and end",
+      test: ScalarSmart {
+        try Sub(
+          text: TextOf("hello world"),
+          start: 3,
+          final: 2
+        ).asString()
+      },
+      matcher: Throws(
+        msg: "begin: 3 must be less than finish: 2",
+        type: StandardException.Type.self
+      )
     ).affirm()
   }
 }
