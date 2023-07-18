@@ -1,3 +1,3 @@
 # Swoop
 
-A description of this package.
+Totally Object Oriented Swift Primitives framework.
